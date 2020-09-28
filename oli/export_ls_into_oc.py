@@ -1,5 +1,5 @@
 '''
-Created November and December 2018
+Copied from oli_est, September 2020
 
 @author: GerbenRienk
 '''
@@ -9,7 +9,7 @@ import json
 import base64
 from utils.logmailer import MailThisLogFile
 from utils.dictfile import readDictFile
-from utils.fam_est import compose_odm
+from utils.fam_kaz import compose_odm
 from utils.limesurveyrc2api import LimeSurveyRemoteControl2API
 from utils.ocwebservices import dataWS
 from utils.pg_api import ConnToOliDB, PGSubject
@@ -40,10 +40,12 @@ def cycle_through_syncs():
         tokens_list = read_ls_tokens(config, 0, 10000)
         for token in tokens_list:
             tokens[token['token']]=token['participant_info']['firstname']
+        '''
         tokens_list = read_ls_tokens(config, 10000, 10000)
         for token in tokens_list:
             tokens[token['token']]=token['participant_info']['firstname']
-
+        '''
+            
         # now we have the dict, we can reset the list
         tokens_list=[]
 
@@ -98,7 +100,7 @@ def cycle_through_syncs():
                             
                             if (study_subject_oid is None or study_subject_oid == ''):
                                 # try to get a valid study subject oid
-                                study_subject_oid = PGSubject(study_subject_id).GetSSOID()
+                                study_subject_oid = PGSubject(study_subject_id).GetSSOID(verbose=False)
                                 # we don't know if we now have study_subject_oid,
                                 # but the procedure only writes the study subject oid to the database for later use
                                 # if it is not null
@@ -112,7 +114,7 @@ def cycle_through_syncs():
                             # only compose the odm and try to import the result
                             # if this wasn't done before, so look at date_completed
                             if(conn.DLookup('date_completed', 'ls_responses', 'sid=%i and response_id=%i' % (sid, response_id)) is None):
-                                ws_request = compose_odm(study_subject_oid, one_response_data)
+                                ws_request = compose_odm(study_subject_oid, one_response_data, verbose=False)
                                 conn.WriteDataWSRequest(sid, response_id, ws_request)
                                 import_result = myDataWS.importData(ws_request)
                                 conn.WriteDataWSResponse(sid, response_id, import_result)

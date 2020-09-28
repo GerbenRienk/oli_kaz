@@ -192,7 +192,7 @@ class PGSubject(object):
         self._studysubjectid = PGStudySubjectID
         return
     
-    def GetSSOID(self):
+    def GetSSOID(self, verbose=False):
         'method to get the StudySubjectOID using rest'
         import requests
         import xml.etree.ElementTree as ET
@@ -209,10 +209,15 @@ class PGSubject(object):
         mySession.post(login_url,params=login_action,data=login_payload)
         cd_url = config['baseUrlRest'] + '/rest/clinicaldata/xml/view/' + config['studyOid'] + '/'
         cd_url = cd_url + self._studysubjectid + '/*/*'
+        if verbose:
+            print('GetSSOID using url %s' % cd_url)
         rest_response = mySession.get(cd_url)
         # only analyze the response, if the status code was 200 
         if(rest_response.status_code == 200):
             document = rest_response.content
+            if verbose:
+                print('response is %s' % document)
+            
             root = ET.fromstring(document)
                         
             for clinical_data in root.findall('{http://www.cdisc.org/ns/odm/v1.3}ClinicalData/'):
