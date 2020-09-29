@@ -62,9 +62,9 @@ def compose_odm(study_subject_oid, data_ls, verbose=False):
     # opening tags
     _odm_data = ''
     _odm_data = _odm_data + '<ODM>\n'
-    _odm_data = _odm_data + '  <ClinicalData StudyOID="S_CDKAZ">\n'
+    _odm_data = _odm_data + '  <ClinicalData StudyOID="S_CPKAZ">\n'
     _odm_data = _odm_data + '    <SubjectData SubjectKey="' + study_subject_oid + '">\n'
-    _odm_data = _odm_data + '      <StudyEventData StudyEventOID="SE_KAZ_CD">\n'
+    _odm_data = _odm_data + '      <StudyEventData StudyEventOID="SE_KAZ_CP">\n'
     _odm_data = _odm_data + '        <FormData FormOID="F_KZFAMILYFORM_V1">\n'
     _odm_data = _odm_data + '          <ItemGroupData ItemGroupOID="IG_KZFAM_UNGROUPED" ItemGroupRepeatKey="1" TransactionType="Insert">\n'
     # data
