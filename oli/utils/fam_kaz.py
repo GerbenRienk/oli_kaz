@@ -5,6 +5,10 @@ def write_odm_line( oc_item_name, ls_item_value, is_date=False, is_time=False, i
         if (is_date):
             _this_value = ls_item_value[0:10]
         if (is_time):
+            ''' for kaz we used a dropdown for time, bed and wake up
+            '''
+            _my_time = _this_value[0:2] + ':' + _this_value[2:]
+            _this_value = _my_time
             
             '''
             # time field: check separator

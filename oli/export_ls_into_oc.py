@@ -40,11 +40,10 @@ def cycle_through_syncs():
         tokens_list = read_ls_tokens(config, 0, 10000)
         for token in tokens_list:
             tokens[token['token']]=token['participant_info']['firstname']
-        '''
+        
         tokens_list = read_ls_tokens(config, 10000, 10000)
         for token in tokens_list:
             tokens[token['token']]=token['participant_info']['firstname']
-        '''
             
         # now we have the dict, we can reset the list
         tokens_list=[]
